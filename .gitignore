@@ -59,3 +59,7 @@ memory/*.json
 .coverage
 htmlcov/
 .pytest_cache/
+
+
+lambda-deployment.zip
+lambda-package/

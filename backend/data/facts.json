@@ -1,0 +1,28 @@
+{
+  "full_name": "Nikoloz Mchedlishvili",
+  "name": "Niko",
+  "current_role": "Senior Software Engineer at Exadel",
+  "location": "Tbilisi, Georgia",
+  "email": "niko@niko.ge",
+  "linkedin": "https://www.linkedin.com/in/nikoloz-mchedlishvili-3062b11a2/?trk=opento_sprofile_details",
+  "specialties": [
+    "React Developer",
+    "Node.js Developer",
+    "LLM Integration",
+    "TypeScript",
+    "JavaScript",
+    "Python",
+    "AWS",
+    "Docker",
+    "Microservices",
+    "Agile Methodologies"
+  ],
+  "years_experience": 10,
+  "education": [
+    {
+      "degree": "Master's in Physics",
+      "institution": "Tbilisi State University"
+      
+    }
+  ]
+}
