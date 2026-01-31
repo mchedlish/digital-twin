@@ -24,11 +24,26 @@ AWS_REGION=${DEFAULT_AWS_REGION:-us-east-1}
 
 # Initialize terraform with S3 backend
 echo "🔧 Initializing Terraform with S3 backend..."
+
+# Remove ALL local terraform state to avoid migration prompts
+if [ -d ".terraform" ]; then
+  echo "   Cleaning old Terraform configuration..."
+  rm -rf .terraform
+fi
+if [ -f "terraform.tfstate" ]; then
+  echo "   Removing local state files..."
+  rm -f terraform.tfstate terraform.tfstate.backup
+fi
+if [ -d "terraform.tfstate.d" ]; then
+  echo "   Removing workspace state files..."
+  rm -rf terraform.tfstate.d
+fi
+
 terraform init -input=false \
   -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
   -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
   -backend-config="region=${AWS_REGION}" \
-  -backend-config="dynamodb_table=twin-terraform-locks" \
+  -backend-config="use_lockfile=true" \
   -backend-config="encrypt=true"
 
 # Check if workspace exists
