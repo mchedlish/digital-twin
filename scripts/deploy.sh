@@ -28,6 +28,14 @@ else
   terraform workspace select "$ENVIRONMENT"
 fi
 
+# Import existing IAM role if it exists (prevents EntityAlreadyExists error)
+echo "🔍 Checking for existing IAM role..."
+IAM_ROLE_NAME="${PROJECT_NAME}-${ENVIRONMENT}-lambda-role"
+if aws iam get-role --role-name "$IAM_ROLE_NAME" &>/dev/null; then
+  echo "📥 Importing existing IAM role: $IAM_ROLE_NAME"
+  terraform import aws_iam_role.lambda_role "$IAM_ROLE_NAME" 2>/dev/null || echo "   (Role already in state or import not needed)"
+fi
+
 # Use prod.tfvars for production environment
 if [ "$ENVIRONMENT" = "prod" ]; then
   TF_APPLY_CMD=(terraform apply -var-file=prod.tfvars -var="project_name=$PROJECT_NAME" -var="environment=$ENVIRONMENT" -auto-approve)
